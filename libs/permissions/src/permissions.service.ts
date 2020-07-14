@@ -1,4 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
-export class PermissionsService {}
+export class PermissionsService {
+  constructor(@Inject('CONFIG_OPTIONS') private options) {
+  }
+}
