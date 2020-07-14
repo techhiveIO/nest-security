@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright TechHive.IO. All Rights Reserved.
+ * Licensed under the CC-BY-4.0 License. See LICENSE in the project root for license information.
+ */
+
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { SchemaOptions } from '@nestjs/mongoose/dist/decorators/schema.decorator';

@@ -2,12 +2,9 @@ import { DynamicModule, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { PermissionsService } from './permissions.service';
-import { CONFIG_OPTIONS } from './constants';
 import { RolesAndPermission, RolesAndPermissionsSchema } from '@th/permissions/schemas/roles-and-permission.schema';
-
-export interface PermissionsModuleOptions {
-  [role: string]: string[]
-}
+import { AclService } from './services/acl.service';
+import { AclOptions, TH_SECURITY_OPTIONS_TOKEN } from '@th/permissions/security.options';
 
 @Module({
   imports: [
@@ -17,16 +14,16 @@ export interface PermissionsModuleOptions {
       collection: 'roles-and-permissions',
     }]),
   ],
-  providers: [PermissionsService],
+  providers: [PermissionsService, AclService],
   exports: [PermissionsService],
 })
 export class PermissionsModule {
-  static register(options: PermissionsModuleOptions): DynamicModule {
+  static register(options: AclOptions): DynamicModule {
     return {
       module: PermissionsModule,
       providers: [
         {
-          provide: CONFIG_OPTIONS,
+          provide: TH_SECURITY_OPTIONS_TOKEN,
           useValue: options,
         },
         PermissionsService,
