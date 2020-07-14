@@ -5,6 +5,7 @@ import { PermissionsService } from './permissions.service';
 import { RolesAndPermission, RolesAndPermissionsSchema } from '@th/permissions/schemas/roles-and-permission.schema';
 import { AclService } from './services/acl.service';
 import { AclOptions, TH_SECURITY_OPTIONS_TOKEN } from '@th/permissions/security.options';
+import { AccessCheckerService } from './services/access-checker.service';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { AclOptions, TH_SECURITY_OPTIONS_TOKEN } from '@th/permissions/security.
       collection: 'roles-and-permissions',
     }]),
   ],
-  providers: [PermissionsService, AclService],
+  providers: [PermissionsService, AclService, AccessCheckerService],
   exports: [PermissionsService],
 })
 export class PermissionsModule {
