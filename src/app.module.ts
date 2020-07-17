@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { PermissionsModule } from '@th/permissions';
 
 const mongooseOptions: MongooseModuleOptions = {
   useUnifiedTopology: true,
@@ -20,6 +21,22 @@ const mongooseOptions: MongooseModuleOptions = {
       process.env.MONGODB_CONNECTION_STRING,
       mongooseOptions,
     ),
+    PermissionsModule.register({
+      accessControl: {
+        guest: {
+          view: ['news', 'comments'],
+        },
+        user: {
+          parent: 'guest',
+          create: 'comments',
+        },
+        moderator: {
+          parent: 'user',
+          create: 'news',
+          remove: '*',
+        },
+      },
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
