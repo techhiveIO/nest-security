@@ -1,11 +1,17 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { PermissionsService } from './permissions.service';
-import { RolesAndPermission, RolesAndPermissionsSchema } from '@th/permissions/schemas/roles-and-permission.schema';
-import { AclService } from './services/acl.service';
-import { AclOptions, TH_SECURITY_OPTIONS_TOKEN } from '@th/permissions/security.options';
-import { AccessCheckerService } from './services/access-checker.service';
+import { RolesAndPermission, RolesAndPermissionsSchema } from './schemas/roles-and-permission.schema';
+import { AclOptions, TH_SECURITY_OPTIONS_TOKEN } from './security.options';
+import { RoleProvider } from './services/role.provider';
+import { of } from 'rxjs';
+import { AccessCheckerService } from '@th/permissions/services/access-checker.service';
+import { AclService } from '@th/permissions/services/acl.service';
+
+// TODO: double check what needs to be done with this
+const roleProvider = () => {
+  return of(null);
+};
 
 @Module({
   imports: [
@@ -15,8 +21,8 @@ import { AccessCheckerService } from './services/access-checker.service';
       collection: 'roles-and-permissions',
     }]),
   ],
-  providers: [PermissionsService, AclService, AccessCheckerService],
-  exports: [PermissionsService],
+  // TODO: is this needed?
+  // providers: [AclService, AccessCheckerService],
 })
 export class PermissionsModule {
   static register(options: AclOptions): DynamicModule {
@@ -27,9 +33,12 @@ export class PermissionsModule {
           provide: TH_SECURITY_OPTIONS_TOKEN,
           useValue: options,
         },
-        PermissionsService,
+        { provide: RoleProvider, useValue: roleProvider() },
+        // TODO: check whether the 2 below should be here
+        AclService,
+        AccessCheckerService,
       ],
-      exports: [PermissionsService],
+      exports: [AclService, AccessCheckerService],
     };
   }
 }
