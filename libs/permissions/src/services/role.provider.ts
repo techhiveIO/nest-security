@@ -7,7 +7,6 @@
 import { Observable } from 'rxjs';
 
 export abstract class RoleProvider {
-
   /**
    * Returns current user role
    * @returns {Observable<string | string[]>}

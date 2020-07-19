@@ -5,15 +5,14 @@
  */
 
 import { Inject, Injectable, Optional } from '@nestjs/common';
-import { AccessControl, AclOptions, AclRole, TH_SECURITY_OPTIONS_TOKEN } from '@th/permissions/security.options';
+import {
+  AccessControl,
+  AclOptions,
+  AclRole,
+  TH_SECURITY_OPTIONS_TOKEN,
+} from '@th/permissions/security.options';
+import { popParent, shallowArrayClone, shallowObjectClone } from '../utils';
 
-const shallowObjectClone = (o) => Object.assign({}, o);
-const shallowArrayClone = (a) => Object.assign([], a);
-const popParent = (abilities) => {
-  const parent = abilities['parent'];
-  delete abilities['parent'];
-  return parent;
-};
 
 @Injectable()
 export class AclService {
@@ -21,8 +20,11 @@ export class AclService {
 
   private state: AccessControl = {};
 
-  constructor(@Optional() @Inject(TH_SECURITY_OPTIONS_TOKEN) protected settings: AclOptions = {}) {
-
+  constructor(
+    @Optional()
+    @Inject(TH_SECURITY_OPTIONS_TOKEN)
+    protected settings: AclOptions = {},
+  ) {
     if (settings.accessControl) {
       this.setAccessControl(settings.accessControl);
     }
@@ -46,8 +48,11 @@ export class AclService {
    * @param {string} parent
    * @param {[permission: string]: string|string[]} abilities
    */
-  register(role: string, parent: string = null, abilities: { [permission: string]: string | string[] } = {}) {
-
+  register(
+    role: string,
+    parent: string = null,
+    abilities: { [permission: string]: string | string[] } = {},
+  ) {
     this.validateRole(role);
 
     this.state[role] = {
@@ -58,6 +63,7 @@ export class AclService {
       const resources = typeof value === 'string' ? [value] : value;
       this.allow(role, permission, shallowArrayClone(resources));
     }
+
   }
 
   /**
@@ -67,7 +73,6 @@ export class AclService {
    * @param {string | string[]} resource
    */
   allow(role: string, permission: string, resource: string | string[]) {
-
     this.validateRole(role);
 
     if (!this.getRole(role)) {
@@ -79,8 +84,9 @@ export class AclService {
     let resources = shallowArrayClone(this.getRoleResources(role, permission));
     resources = resources.concat(resource);
 
-    this.state[role][permission] = resources
-      .filter((item, pos) => resources.indexOf(item) === pos);
+    this.state[role][permission] = resources.filter(
+      (item, pos) => resources.indexOf(item) === pos,
+    );
   }
 
   /**
@@ -94,7 +100,8 @@ export class AclService {
     this.validateResource(resource);
 
     const parentRole = this.getRoleParent(role);
-    const parentCan = parentRole && this.can(this.getRoleParent(role), permission, resource);
+    const parentCan =
+      parentRole && this.can(this.getRoleParent(role), permission, resource);
     return parentCan || this.exactCan(role, permission, resource);
   }
 
@@ -110,13 +117,18 @@ export class AclService {
 
   private validateResource(resource: string) {
     if (!resource || [AclService.ANY_RESOURCE].includes(resource)) {
-      throw new Error(`AclService: cannot use empty or bulk '*' resource placeholder with 'can' method`);
+      throw new Error(
+        `AclService: cannot use empty or bulk '*' resource placeholder with 'can' method`,
+      );
     }
   }
 
   private exactCan(role: string, permission: string, resource: string) {
     const resources = this.getRoleResources(role, permission);
-    return resources.includes(resource) || resources.includes(AclService.ANY_RESOURCE);
+    return (
+      resources.includes(resource) ||
+      resources.includes(AclService.ANY_RESOURCE)
+    );
   }
 
   private getRoleResources(role: string, permission: string): string[] {

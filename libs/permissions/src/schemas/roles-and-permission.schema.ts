@@ -5,7 +5,7 @@
  */
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 import { SchemaOptions } from '@nestjs/mongoose/dist/decorators/schema.decorator';
 
 const schemaOptions: SchemaOptions = {
@@ -20,15 +20,19 @@ const schemaOptions: SchemaOptions = {
 
 @Schema(schemaOptions)
 export class RolesAndPermission extends Document {
+  @Prop({ type: Types.ObjectId })
+  parent: string;
+
   @Prop({ required: true, lowercase: true, trim: true, unique: true })
   role: string;
 
   @Prop([{ required: true, type: String, default: '*' }])
-  permissions: string;
+  permissions: string | string[];
 
-  @Prop({ required: true, type: Date })
-  timestamp: Date;
-
+  @Prop({ required: true, type: Date, default: new Date() })
+  timestamp?: Date;
 }
 
-export const RolesAndPermissionsSchema = SchemaFactory.createForClass(RolesAndPermission);
+export const RolesAndPermissionsSchema = SchemaFactory.createForClass(
+  RolesAndPermission,
+);

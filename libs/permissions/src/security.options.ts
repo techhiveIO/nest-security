@@ -1,15 +1,16 @@
 export interface AclRole {
-  parent?: string,
+  parent?: string;
 
-  [permission: string]: string | string[] | undefined,
+  [permission: string]: string | string[] | undefined;
 }
 
 export interface AccessControl {
-  [role: string]: AclRole,
+  [role: string]: AclRole;
 }
 
 export interface AclOptions {
-  accessControl?: AccessControl,
+  accessControl?: AccessControl;
+  override?: boolean;
 }
 
 export const TH_SECURITY_OPTIONS_TOKEN = 'CONFIG_OPTIONS';
