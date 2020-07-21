@@ -21,13 +21,13 @@ const INTERNAL_PROVIDERS = [RolesAndPermissionsService];
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      {
-        name: RolesAndPermission.name,
-        schema: RolesAndPermissionsSchema,
-        collection: 'roles-and-permissions',
-      },
-    ]),
+    // MongooseModule.forFeature([
+    //   {
+    //     name: RolesAndPermission.name,
+    //     schema: RolesAndPermissionsSchema,
+    //     collection: 'roles-and-permissions',
+    //   },
+    // ]),
   ],
   providers: [...INTERNAL_PROVIDERS],
   // TODO: is this needed?

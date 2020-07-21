@@ -34,7 +34,7 @@ export class AclService {
    * Set/Reset ACL list
    * @param {AccessControl} list
    */
-  setAccessControl(list: AccessControl) {
+  setAccessControl(list: AccessControl): void {
     for (const [role, value] of Object.entries(list)) {
       const abilities = shallowObjectClone(value);
       const parent = popParent(abilities);
@@ -52,7 +52,7 @@ export class AclService {
     role: string,
     parent: string = null,
     abilities: { [permission: string]: string | string[] } = {},
-  ) {
+  ): void {
     this.validateRole(role);
 
     this.state[role] = {
@@ -72,7 +72,7 @@ export class AclService {
    * @param {string} permission
    * @param {string | string[]} resource
    */
-  allow(role: string, permission: string, resource: string | string[]) {
+  allow(role: string, permission: string, resource: string | string[]): void {
     this.validateRole(role);
 
     if (!this.getRole(role)) {

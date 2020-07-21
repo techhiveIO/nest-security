@@ -20,20 +20,20 @@ export class RolesAndPermissionsService implements OnModuleInit {
     @Optional()
     @Inject(TH_SECURITY_OPTIONS_TOKEN)
     protected settings: AclOptions = {},
-    @InjectModel(RolesAndPermission.name)
-    private readonly rolesAndPermissionsModel: Model<RolesAndPermission>,
+    // @InjectModel(RolesAndPermission.name)
+    // private readonly rolesAndPermissionsModel: Model<RolesAndPermission>,
   ) {
   }
 
   async onModuleInit(): Promise<void> {
-    console.log('INITIALIZED');
-    const availableRolesAndPermissions = await this.checkRegisteredRolesAndPermissions();
-    console.log(availableRolesAndPermissions);
-    const accessControl = this.settings.accessControl;
-    if (accessControl && !availableRolesAndPermissions.length) {
-      console.log('populate roles and permissions collection');
-      this.populateRolesAndPermissionsCollection(accessControl);
-    }
+    // console.log('INITIALIZED');
+    // const availableRolesAndPermissions = await this.checkRegisteredRolesAndPermissions();
+    // console.log(availableRolesAndPermissions);
+    // const accessControl = this.settings.accessControl;
+    // if (accessControl && !availableRolesAndPermissions.length) {
+    //   console.log('populate roles and permissions collection');
+    //   this.populateRolesAndPermissionsCollection(accessControl);
+    // }
   }
 
   /**
@@ -58,9 +58,9 @@ export class RolesAndPermissionsService implements OnModuleInit {
     }
   }
 
-  async checkRegisteredRolesAndPermissions(): Promise<RolesAndPermission[]> {
-    return await this.rolesAndPermissionsModel.find().exec();
-  }
+  // async checkRegisteredRolesAndPermissions(): Promise<RolesAndPermission[]> {
+  //   return await this.rolesAndPermissionsModel.find().exec();
+  // }
 
   populateRolesAndPermissionsCollection(list: AccessControl) {
     for (const [role, value] of Object.entries(list)) {
