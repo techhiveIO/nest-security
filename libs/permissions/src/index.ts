@@ -6,3 +6,4 @@
 export * from './permissions.module';
 export * from './services/access-checker.service';
 export * from './services/acl.service';
+export * from './decorators/permissions.decorator' ;

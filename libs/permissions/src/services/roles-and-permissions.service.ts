@@ -49,25 +49,25 @@ export class RolesAndPermissionsService implements OnModuleInit {
     moderator: { parent: 'user', create: [ 'news' ], remove: [ '*' ] }
    }
    */
-  private async constructModel(model: modelInterface): Promise<void> {
-    try {
-      console.log(model);
-      // await this.rolesAndPermissionsModel.findOneAndUpdate({role}, { parent, role, permissions }, {upsert: true});
-    } catch (e) {
-      console.error(e);
-    }
-  }
+  // private async constructModel(model: modelInterface): Promise<void> {
+  //   try {
+  //     console.log(model);
+  // await this.rolesAndPermissionsModel.findOneAndUpdate({role}, { parent, role, permissions }, {upsert: true});
+  // } catch (e) {
+  //   console.error(e);
+  // }
+  // }
 
   // async checkRegisteredRolesAndPermissions(): Promise<RolesAndPermission[]> {
   //   return await this.rolesAndPermissionsModel.find().exec();
   // }
 
-  populateRolesAndPermissionsCollection(list: AccessControl) {
-    for (const [role, value] of Object.entries(list)) {
-      const abilities = shallowObjectClone(value);
-      const parent = popParent(abilities) || null;
-      // this.register(role, parent, abilities);
-      console.log(parent, shallowArrayClone(abilities), role);
-    }
-  }
+  // populateRolesAndPermissionsCollection(list: AccessControl) {
+  //   for (const [role, value] of Object.entries(list)) {
+  //     const abilities = shallowObjectClone(value);
+  //     const parent = popParent(abilities) || null;
+  // //     this.register(role, parent, abilities);
+  // console.log(parent, shallowArrayClone(abilities), role);
+  // }
+  // }
 }

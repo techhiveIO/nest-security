@@ -1,13 +1,14 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { AuthRole } from '@th/permissions/decorators/permissions.decorator';
+import { GateGuard } from '@th/permissions';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) {
+  }
 
   @Get()
-  @AuthRole('admin')
+  @GateGuard('admin')
   getHello(): string {
     return this.appService.getHello();
   }

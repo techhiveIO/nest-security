@@ -1,11 +1,10 @@
 import { applyDecorators, SetMetadata, UseGuards } from '@nestjs/common';
-import { AclRole } from '../security.options';
+import { AuthorizationGuard } from '../guards/authorization.guard';
 
-export function AuthRole(...roles: string[]) {
-  console.log(roles);
+export function GateGuard(...roles: string[]) {
   return applyDecorators(
     SetMetadata('roles', roles),
-    // UseGuards(AuthGuard, RolesGuard),
+    UseGuards(AuthorizationGuard),
     // ApiBearerAuth(),
     // ApiUnauthorizedResponse({ description: 'Unauthorized"' }),
   );
