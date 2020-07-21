@@ -3,8 +3,16 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { RolesAndPermission } from '../schemas/roles-and-permission.schema';
-import { AccessControl, AclOptions, TH_SECURITY_OPTIONS_TOKEN } from '@th/permissions/security.options';
-import { popParent, shallowArrayClone, shallowObjectClone } from '@th/permissions/utils';
+import {
+  AccessControl,
+  AclOptions,
+  TH_SECURITY_OPTIONS_TOKEN,
+} from '@th/permissions/security.options';
+import {
+  popParent,
+  shallowArrayClone,
+  shallowObjectClone,
+} from '@th/permissions/utils';
 
 interface modelInterface {
   parent: string;
@@ -20,10 +28,9 @@ export class RolesAndPermissionsService implements OnModuleInit {
     @Optional()
     @Inject(TH_SECURITY_OPTIONS_TOKEN)
     protected settings: AclOptions = {},
-    // @InjectModel(RolesAndPermission.name)
-    // private readonly rolesAndPermissionsModel: Model<RolesAndPermission>,
-  ) {
-  }
+  ) // @InjectModel(RolesAndPermission.name)
+  // private readonly rolesAndPermissionsModel: Model<RolesAndPermission>,
+  {}
 
   async onModuleInit(): Promise<void> {
     // console.log('INITIALIZED');

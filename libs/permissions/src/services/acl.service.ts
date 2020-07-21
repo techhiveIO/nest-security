@@ -13,7 +13,6 @@ import {
 } from '@th/permissions/security.options';
 import { popParent, shallowArrayClone, shallowObjectClone } from '../utils';
 
-
 @Injectable()
 export class AclService {
   private static readonly ANY_RESOURCE = '*';
@@ -63,7 +62,6 @@ export class AclService {
       const resources = typeof value === 'string' ? [value] : value;
       this.allow(role, permission, shallowArrayClone(resources));
     }
-
   }
 
   /**

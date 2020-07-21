@@ -30,8 +30,6 @@ const INTERNAL_PROVIDERS = [RolesAndPermissionsService];
     // ]),
   ],
   providers: [...INTERNAL_PROVIDERS],
-  // TODO: is this needed?
-  // providers: [AclService, AccessCheckerService],
 })
 export class PermissionsModule {
   static register(options: AclOptions): DynamicModule {
