@@ -27,9 +27,8 @@ export class RolesAndPermissionsService implements OnModuleInit {
   constructor(
     @Optional()
     @Inject(TH_SECURITY_OPTIONS_TOKEN)
-    protected settings: AclOptions = {},
-  ) // @InjectModel(RolesAndPermission.name)
-  // private readonly rolesAndPermissionsModel: Model<RolesAndPermission>,
+    protected settings: AclOptions = {}, // @InjectModel(RolesAndPermission.name)
+  ) // private readonly rolesAndPermissionsModel: Model<RolesAndPermission>,
   {}
 
   async onModuleInit(): Promise<void> {

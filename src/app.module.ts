@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PermissionsModule } from '@th/permissions';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 const mongooseOptions: MongooseModuleOptions = {
   useUnifiedTopology: true,
@@ -37,6 +39,8 @@ const mongooseOptions: MongooseModuleOptions = {
         },
       },
     }),
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
